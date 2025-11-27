@@ -1,0 +1,1348 @@
+{
+  "SpeciesBird": {
+    "name": "SpeciesBird",
+    "kind": "OBJECT",
+    "description": null,
+    "fields": [
+      {
+        "name": "alternativeName",
+        "description": null,
+        "type": {
+          "name": "String",
+          "kind": "SCALAR",
+          "ofType": null
+        }
+      },
+      {
+        "name": "badges",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": null,
+            "kind": "LIST"
+          }
+        }
+      },
+      {
+        "name": "definiteArticle",
+        "description": null,
+        "type": {
+          "name": "String",
+          "kind": "SCALAR",
+          "ofType": null
+        }
+      },
+      {
+        "name": "description",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "favoriteFoods",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": null,
+            "kind": "LIST"
+          }
+        }
+      },
+      {
+        "name": "genderOfName",
+        "description": null,
+        "type": {
+          "name": "SpeciesGenderOfName",
+          "kind": "ENUM",
+          "ofType": null
+        }
+      },
+      {
+        "name": "iconUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "indefiniteArticle",
+        "description": null,
+        "type": {
+          "name": "String",
+          "kind": "SCALAR",
+          "ofType": null
+        }
+      },
+      {
+        "name": "isUnofficialName",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "lengthFrom",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Float",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "lengthTo",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Float",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "mapUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "name",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "scientificName",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "sentenceName",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "sounds",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": null,
+            "kind": "LIST"
+          }
+        }
+      },
+      {
+        "name": "weightFrom",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Float",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "weightTo",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Float",
+            "kind": "SCALAR"
+          }
+        }
+      }
+    ]
+  },
+  "Species": {
+    "name": "Species",
+    "kind": "INTERFACE",
+    "description": null,
+    "fields": [
+      {
+        "name": "description",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "iconUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "name",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "scientificName",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      }
+    ]
+  },
+  "FeederForPrivate": {
+    "name": "FeederForPrivate",
+    "kind": "INTERFACE",
+    "description": null,
+    "fields": [
+      {
+        "name": "battery",
+        "description": null,
+        "type": {
+          "name": "FeederMetricBattery",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "food",
+        "description": null,
+        "type": {
+          "name": "FeederMetricFood",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "housingType",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederHousingType",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "name",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "signal",
+        "description": null,
+        "type": {
+          "name": "FeederMetricSignal",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "state",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederState",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "supportsAudio",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "supportsEnhancedLivestream",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "supportsWebRTC",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "temperature",
+        "description": null,
+        "type": {
+          "name": "FeederMetricTemperature",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "version",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederDeviceVersion",
+            "kind": "ENUM"
+          }
+        }
+      }
+    ]
+  },
+  "FeederForOwner": {
+    "name": "FeederForOwner",
+    "kind": "OBJECT",
+    "description": null,
+    "fields": [
+      {
+        "name": "audioEnabled",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "availableFirmwareVersion",
+        "description": null,
+        "type": {
+          "name": "String",
+          "kind": "SCALAR",
+          "ofType": null
+        }
+      },
+      {
+        "name": "battery",
+        "description": null,
+        "type": {
+          "name": "FeederMetricBattery",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "cameraFieldOfView",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederCameraFieldOfView",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "firmwareUpdateAvailability",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederFirmwareUpdateAvailabilityCheck",
+            "kind": "UNION"
+          }
+        }
+      },
+      {
+        "name": "firmwareVersion",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "food",
+        "description": null,
+        "type": {
+          "name": "FeederMetricFood",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "frequency",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederFrequency",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "housingType",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederHousingType",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "invitations",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": null,
+            "kind": "LIST"
+          }
+        }
+      },
+      {
+        "name": "invitationsAvailable",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "location",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Location",
+            "kind": "OBJECT"
+          }
+        }
+      },
+      {
+        "name": "lowBatteryNotification",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "lowFoodNotification",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "members",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": null,
+            "kind": "LIST"
+          }
+        }
+      },
+      {
+        "name": "name",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "offGrid",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "powerProfile",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederPowerProfile",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "presenceUpdatedAt",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "DateTime",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "serialNumber",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "signal",
+        "description": null,
+        "type": {
+          "name": "FeederMetricSignal",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "state",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederState",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "supportsAudio",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "supportsEnhancedLivestream",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "supportsWebRTC",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "temperature",
+        "description": null,
+        "type": {
+          "name": "FeederMetricTemperature",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "version",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederDeviceVersion",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "videoHighQualityEnabled",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "videoQuality",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "FeederVideoQuality",
+            "kind": "ENUM"
+          }
+        }
+      }
+    ]
+  },
+  "MediaVideo": {
+    "name": "MediaVideo",
+    "kind": "OBJECT",
+    "description": null,
+    "fields": [
+      {
+        "name": "contentUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "createdAt",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "DateTime",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "height",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "quality",
+        "description": null,
+        "type": {
+          "name": "MediaVideoQuality",
+          "kind": "ENUM",
+          "ofType": null
+        }
+      },
+      {
+        "name": "state",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "MediaState",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "thumbnailUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "width",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        }
+      }
+    ]
+  },
+  "MediaImage": {
+    "name": "MediaImage",
+    "kind": "OBJECT",
+    "description": null,
+    "fields": [
+      {
+        "name": "contentUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "createdAt",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "DateTime",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "height",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "state",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "MediaState",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "thumbnailUrl",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "width",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        }
+      }
+    ]
+  },
+  "FeedItemNewPostcard": {
+    "name": "FeedItemNewPostcard",
+    "kind": "OBJECT",
+    "description": null,
+    "fields": [
+      {
+        "name": "aiMessagesSummary",
+        "description": null,
+        "type": {
+          "name": "FeedItemPostcardAiMessagesSummary",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "canBeShared",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "canInferenceHaveFeedback",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "canMediaSpeciesNameHaveFeedback",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "canMediaSpeciesStateHaveFeedback",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "createdAt",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "DateTime",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "expiresAt",
+        "description": null,
+        "type": {
+          "name": "DateTime",
+          "kind": "SCALAR",
+          "ofType": null
+        }
+      },
+      {
+        "name": "feeder",
+        "description": null,
+        "type": {
+          "name": "AnyFeeder",
+          "kind": "UNION",
+          "ofType": null
+        }
+      },
+      {
+        "name": "hasVideoMedia",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "id",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "ID",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "inferenceConfidenceLevel",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "InferenceConfidenceLevel",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "inferenceExecutionMode",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "InferenceExecutionMode",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "inferenceType",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "InferenceType",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "interactionsSummary",
+        "description": null,
+        "type": {
+          "name": "FeedItemPostcardInteractionsSummary",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "isMediaSourceWatching",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "mediaImageCount",
+        "description": "Counts image medias from inference results",
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        }
+      },
+      {
+        "name": "mediaSpeciesAssignedName",
+        "description": null,
+        "type": {
+          "name": "MediaSpeciesName",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "mediaSpeciesNameAssignmentAvailability",
+        "description": "Property to determine if species name can be assigned to media",
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "MediaSpeciesNameAssignmentAvailability",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "mediaSpeciesNameIdentificationConfidenceLevel",
+        "description": null,
+        "type": {
+          "name": "MediaSpeciesNameIdentificationConfidenceLevel",
+          "kind": "ENUM",
+          "ofType": null
+        }
+      },
+      {
+        "name": "mediaSpeciesStateDisplay",
+        "description": null,
+        "type": {
+          "name": "MediaSpeciesStateDisplay",
+          "kind": "OBJECT",
+          "ofType": null
+        }
+      },
+      {
+        "name": "medias",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": null,
+            "kind": "LIST"
+          }
+        }
+      },
+      {
+        "name": "reanalyzeAvailability",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "InferenceAdvancedReanalyzeAvailability",
+            "kind": "ENUM"
+          }
+        }
+      },
+      {
+        "name": "sightingReportPreview",
+        "description": null,
+        "type": {
+          "name": null,
+          "kind": "NON_NULL",
+          "ofType": {
+            "name": "SightingReportPreview",
+            "kind": "OBJECT"
+          }
+        }
+      }
+    ]
+  },
+  "MediaVideoQuality": {
+    "name": "MediaVideoQuality",
+    "kind": "ENUM",
+    "description": null,
+    "enumValues": [
+      {
+        "name": "K_2",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "K_2_ULTRA",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "SLOW_MOTION",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      }
+    ]
+  },
+  "MediaState": {
+    "name": "MediaState",
+    "kind": "ENUM",
+    "description": null,
+    "enumValues": [
+      {
+        "name": "DELETED",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "READY",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "UPLOADING_CANCELED",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "UPLOADING_FINISHED",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "UPLOADING_STARTED",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      }
+    ]
+  },
+  "FeederHousingType": {
+    "name": "FeederHousingType",
+    "kind": "ENUM",
+    "description": null,
+    "enumValues": [
+      {
+        "name": "BIRD_BATH",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "CLASSIC",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "HUMMINGBIRD",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      }
+    ]
+  },
+  "FeederDeviceVersion": {
+    "name": "FeederDeviceVersion",
+    "kind": "ENUM",
+    "description": null,
+    "enumValues": [
+      {
+        "name": "V1",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "V1_PRO",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      },
+      {
+        "name": "V2",
+        "description": null,
+        "isDeprecated": false,
+        "deprecationReason": null
+      }
+    ]
+  }
+}
