@@ -39,6 +39,54 @@ class Media(UserDict):
         return self.get("contentUrl", None)
 
     @property
+    def quality(self) -> str | None:
+        """Video quality (K_2, K_2_ULTRA, SLOW_MOTION), or None if not a video or not available."""
+        if not self.is_video:
+            return None
+        return self.get("quality")
+
+    @property
+    def state(self) -> str | None:
+        """Media processing state (READY, UPLOADING_STARTED, etc.), or None if not available."""
+        return self.get("state")
+
+    @property
+    def width(self) -> int | None:
+        """Media width in pixels, or None if not available."""
+        width = self.get("width")
+        return int(width) if width is not None else None
+
+    @property
+    def height(self) -> int | None:
+        """Media height in pixels, or None if not available."""
+        height = self.get("height")
+        return int(height) if height is not None else None
+
+    @property
+    def is_slow_motion(self) -> bool:
+        """`True` if this is a slow-motion video, `False` otherwise."""
+        return self.quality == "SLOW_MOTION"
+
+    @property
+    def aspect_ratio(self) -> float | None:
+        """Media aspect ratio (width/height), or None if dimensions not available."""
+        if self.width is not None and self.height is not None and self.height > 0:
+            return self.width / self.height
+        return None
+
+    @property
+    def dimensions(self) -> tuple[int, int] | None:
+        """Media dimensions as (width, height) tuple, or None if not available."""
+        if self.width is not None and self.height is not None:
+            return (self.width, self.height)
+        return None
+
+    @property
+    def is_ready(self) -> bool:
+        """`True` if media processing is complete and ready for viewing."""
+        return self.state == "READY"
+
+    @property
     def is_expired(self) -> bool:
         """`True` if the media URL is expired"""
         return is_media_expired(self.thumbnail_url)

@@ -40,10 +40,17 @@ fragment MediaFullFields on Media {
   thumbnailUrl
   ... on MediaImage {
     contentUrl(size: ORIGINAL)
+    state
+    width
+    height
     __typename
   }
   ... on MediaVideo {
     contentUrl(size: ORIGINAL)
+    quality
+    state
+    width
+    height
     __typename
   }
   __typename
