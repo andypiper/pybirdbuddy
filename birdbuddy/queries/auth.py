@@ -82,6 +82,7 @@ fragment ListFeederFields on FeederForPrivate {
     state
     __typename
   }
+  housingType
   id
   name
   signal {
@@ -94,6 +95,7 @@ fragment ListFeederFields on FeederForPrivate {
     value
     __typename
   }
+  version
   __typename
 }
 

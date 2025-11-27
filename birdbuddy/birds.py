@@ -14,5 +14,10 @@ class Species(UserDict[str, str]):
 
     @property
     def name(self) -> str:
-        """Species name"""
+        """Species common name"""
         return self["name"]
+
+    @property
+    def scientific_name(self) -> str | None:
+        """Species scientific (Latin) name, or None if not available."""
+        return self.get("scientificName")

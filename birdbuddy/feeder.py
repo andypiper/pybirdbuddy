@@ -131,9 +131,20 @@ class Feeder(UserDict[str, any]):
         return self.get("__typename") == "FeederForPublic"
 
     @property
+    def housing_type(self) -> str | None:
+        """Feeder housing type/model, or None if not available."""
+        return self.get("housingType")
+
+    @property
+    def device_version(self) -> str | None:
+        """Device hardware/firmware version, or None if not available."""
+        return self.get("version")
+
+    @property
     def version(self) -> str:
-        """Firmware version (owner only)."""
-        return self.get("firmwareVersion")
+        """Firmware version (owner only), or device version if available."""
+        # Try firmwareVersion first (owner-only field), then version field
+        return self.get("firmwareVersion") or self.get("version")
 
     @property
     def version_update_available(self) -> str:

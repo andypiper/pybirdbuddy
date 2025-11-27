@@ -59,6 +59,7 @@ fragment ListFeederFields on FeederForPrivate {
     state
     __typename
   }
+  housingType
   id
   name
   signal {
@@ -71,6 +72,7 @@ fragment ListFeederFields on FeederForPrivate {
     value
     __typename
   }
+  version
   __typename
 }
 fragment ListOwnerFeederFields on FeederForOwner {
@@ -331,6 +333,7 @@ fragment SpeciesListFields on Species {
   id
   iconUrl
   name
+  scientificName
   __typename
 }
 fragment SpeciesSightingFields on FeedItemSpeciesSighting {
@@ -486,6 +489,7 @@ fragment SpeciesListFields on Species {
   id
   iconUrl
   name
+  scientificName
   __typename
 }
 """.strip()

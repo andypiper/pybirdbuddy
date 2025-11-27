@@ -121,6 +121,7 @@ fragment SpeciesSingleFields on Species {
   id
   description
   name
+  scientificName
   iconUrl
   __typename
 }
@@ -166,6 +167,7 @@ fragment SpeciesListFields on Species {
   id
   iconUrl
   name
+  scientificName
   __typename
 }
 fragment SightingRecognizedBirdUnlockedFields on SightingRecognizedBirdUnlocked {
@@ -272,6 +274,7 @@ fragment SpeciesSingleFields on Species {
   id
   description
   name
+  scientificName
   iconUrl
   __typename
 }
@@ -317,6 +320,7 @@ fragment SpeciesListFields on Species {
   id
   iconUrl
   name
+  scientificName
   __typename
 }
 fragment SightingRecognizedBirdUnlockedFields on SightingRecognizedBirdUnlocked {
@@ -413,6 +417,7 @@ fragment SpeciesSingleFields on Species {
   id
   description
   name
+  scientificName
   iconUrl
   __typename
 }
@@ -458,6 +463,7 @@ fragment SpeciesListFields on Species {
   id
   iconUrl
   name
+  scientificName
   __typename
 }
 fragment SightingRecognizedBirdUnlockedFields on SightingRecognizedBirdUnlocked {
