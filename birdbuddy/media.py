@@ -1,4 +1,9 @@
-"""Bird Buddy collections and media"""
+"""Bird Buddy media collections and individual media items.
+
+This module provides classes for working with media (images and videos) from
+bird sightings, including quality detection, dimensions, processing state,
+and media collections organized by species.
+"""
 
 from __future__ import annotations
 from collections import UserDict
@@ -11,7 +16,46 @@ from .feed import FeedNode
 
 
 class Media(UserDict):
-    """Represents one ``MediaImage`` or ``MediaVideo`` type"""
+    """Represents a single image or video from a bird sighting.
+
+    The Media class provides access to media metadata including dimensions,
+    quality settings, processing state, and content URLs. It distinguishes
+    between video and image media types and provides helper methods for
+    common operations like slow-motion detection and aspect ratio calculation.
+
+    The class inherits from UserDict, so all dictionary operations are supported.
+    Use the provided properties for typed access to media information.
+
+    Examples:
+        >>> media = collection.cover_media
+        >>> if media.is_video:
+        ...     print(f"Video quality: {media.quality}")
+        ...     if media.is_slow_motion:
+        ...         print("This is a slow-motion video!")
+        'Video quality: SLOW_MOTION'
+        'This is a slow-motion video!'
+
+        >>> print(f"Dimensions: {media.width}x{media.height}")
+        'Dimensions: 1920x1080'
+
+        >>> if media.is_ready:
+        ...     url = media.content_url
+        ...     print(f"Media ready at: {url}")
+
+    Video Quality Values:
+        - K_2: Standard 2K resolution video
+        - K_2_ULTRA: Ultra quality 2K video
+        - SLOW_MOTION: Slow-motion video capture
+
+    Media State Values:
+        - READY: Processing complete, media ready for viewing
+        - UPLOADING_STARTED: Upload in progress
+        - PROCESSING: Video processing in progress
+
+    Attributes:
+        All media data is stored in the underlying dictionary.
+        Use properties for typed access to standard fields.
+    """
 
     @property
     def id(self) -> str:
@@ -104,7 +148,27 @@ def is_media_expired(media_url: str) -> bool:
 
 
 class Collection(UserDict):
-    """Collection of media for a particular bird species."""
+    """A collection of media organized by bird species.
+
+    Collections group all sightings and media for a particular bird species,
+    providing access to visit statistics, cover media, and the species information.
+
+    Examples:
+        >>> collections = await bb.refresh_collections()
+        >>> for coll in collections.values():
+        ...     print(f"{coll.bird_name}: {coll.total_visits} visits")
+        ...     print(f"Last seen: {coll.last_visit}")
+        'Northern Cardinal: 42 visits'
+        'Last seen: 2024-01-15 14:30:00+00:00'
+
+        >>> cover = coll.cover_media
+        >>> print(f"Cover media from {coll.feeder_name}")
+        'Cover media from Backyard Buddy'
+
+    Attributes:
+        All collection data is stored in the underlying dictionary.
+        Use properties for typed access to standard fields.
+    """
 
     @property
     def bird_name(self) -> str:

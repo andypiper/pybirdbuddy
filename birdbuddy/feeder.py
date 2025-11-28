@@ -1,4 +1,9 @@
-"""Bird Buddy feeder models."""
+"""Bird Buddy feeder models and device information.
+
+This module provides classes for interacting with Bird Buddy feeder devices,
+including device state, battery and signal metrics, power profiles, and
+video capabilities.
+"""
 
 from collections import UserDict
 from enum import Enum
@@ -7,7 +12,16 @@ from . import LOGGER
 
 
 class MetricState(Enum):
-    """Feeder metric states."""
+    """Feeder metric states for battery, signal strength, and food level.
+
+    Represents the state of various feeder metrics as reported by the API.
+
+    Values:
+        LOW: Metric is in low state (e.g., low battery, weak signal)
+        MEDIUM: Metric is in medium state
+        HIGH: Metric is in high state (e.g., full battery, strong signal)
+        UNKNOWN: Metric state could not be determined
+    """
 
     LOW = "LOW"
     MEDIUM = "MEDIUM"
@@ -22,7 +36,17 @@ class MetricState(Enum):
 
 
 class PowerProfile(Enum):
-    """Feeder power profiles."""
+    """Feeder power profiles controlling detection frequency and battery usage.
+
+    Power profiles determine how frequently the feeder checks for bird activity,
+    balancing detection sensitivity with battery life.
+
+    Values:
+        FRENZY: Maximum detection frequency (requires active subscription)
+        STANDARD: Normal detection frequency (default)
+        POWER_SAVE: Reduced detection frequency for extended battery life
+        UNKNOWN: Profile could not be determined
+    """
 
     FRENZY = "FRENZY_MODE"
     POWER_SAVE = "POWER_SAVER_MODE"
@@ -37,7 +61,26 @@ class PowerProfile(Enum):
 
 
 class FeederState(Enum):
-    """Feeder states."""
+    """Current operational state of a Bird Buddy feeder.
+
+    Represents the various states a feeder can be in, from online operation
+    to offline modes and maintenance states.
+
+    Values:
+        ONLINE: Feeder is online and operational
+        OFFLINE: Feeder is not connected to the network
+        OFF_GRID: Feeder is in off-grid mode (manual activation required)
+        STREAMING: Feeder is actively streaming video
+        READY_TO_STREAM: Feeder is ready to begin streaming
+        TAKING_POSTCARDS: Feeder is capturing bird photos/videos
+        FIRMWARE_UPDATE: Feeder is updating firmware
+        DEEP_SLEEP: Feeder is in deep sleep mode
+        FACTORY_RESET: Feeder is performing factory reset
+        PENDING_FACTORY_RESET: Factory reset is queued
+        PENDING_REMOVAL: Feeder removal is pending
+        OUT_OF_FEEDER: No feeder detected (removed from network)
+        UNKNOWN: State could not be determined
+    """
 
     DEEP_SLEEP = "DEEP_SLEEP"
     FACTORY_RESET = "FACTORY_RESET"
@@ -61,7 +104,17 @@ class FeederState(Enum):
 
 
 class Signal(UserDict[str, any]):
-    """Wifi signal metrics."""
+    """WiFi signal strength metrics for a feeder.
+
+    Provides access to signal strength (RSSI) and quality state.
+
+    Examples:
+        >>> signal = feeder.signal
+        >>> signal.rssi
+        -45
+        >>> signal.state
+        <MetricState.HIGH: 'HIGH'>
+    """
 
     @property
     def rssi(self) -> int:
@@ -75,7 +128,19 @@ class Signal(UserDict[str, any]):
 
 
 class Battery(UserDict[str, any]):
-    """Battery info."""
+    """Battery status and charge information for a feeder.
+
+    Provides battery percentage, charging status, and battery health state.
+
+    Examples:
+        >>> battery = feeder.battery
+        >>> battery.percentage
+        85
+        >>> battery.is_charging
+        False
+        >>> battery.state
+        <MetricState.HIGH: 'HIGH'>
+    """
 
     @property
     def percentage(self) -> int:
@@ -94,7 +159,40 @@ class Battery(UserDict[str, any]):
 
 
 class Feeder(UserDict[str, any]):
-    """Represents one Bird Buddy device."""
+    """Represents a Bird Buddy smart feeder device with full configuration and status.
+
+    The Feeder class provides access to all device information including battery status,
+    WiFi signal strength, firmware version, housing type, video capabilities, and
+    operational state. It supports both owner and shared feeder access with
+    appropriate permission restrictions.
+
+    The class inherits from UserDict, so all dictionary operations are supported.
+    Use the provided properties for typed access to device information.
+
+    Examples:
+        >>> feeder = bb.feeders["feeder-uuid"]
+        >>> print(f"{feeder.name}: {feeder.state}")
+        'Backyard Buddy: FeederState.ONLINE'
+
+        >>> print(f"Battery: {feeder.battery.percentage}%")
+        'Battery: 85%'
+
+        >>> if feeder.supports_audio:
+        ...     print(f"Audio enabled: {feeder.is_audio_enabled}")
+        'Audio enabled: True'
+
+        >>> print(f"Device: {feeder.housing_type} v{feeder.device_version}")
+        'Device: STANDARD v2.0'
+
+    Attributes:
+        All feeder data is stored in the underlying dictionary.
+        Use properties for typed access to standard fields.
+
+    Note:
+        Some properties are only available to the feeder owner and will
+        return None for shared feeders. Check is_owner before accessing
+        owner-only properties like video_quality or version_update_available.
+    """
 
     def __str__(self):
         """Return a string representation of the Feeder."""
@@ -244,7 +342,21 @@ class Feeder(UserDict[str, any]):
 
 
 class FeederUpdateStatus(UserDict[str, any]):
-    """Feeder update status."""
+    """Status of a feeder firmware update operation.
+
+    Tracks the progress and outcome of firmware updates initiated through
+    the API. Use the is_complete, is_in_progress, and is_failed properties
+    to check update status.
+
+    Examples:
+        >>> status = await bb.update_firmware_start(feeder)
+        >>> if status.is_in_progress:
+        ...     print(f"Update progress: {status.progress}%")
+        >>> elif status.is_complete:
+        ...     print("Update completed successfully")
+        >>> elif status.is_failed:
+        ...     print(f"Update failed: {status.failure_reason}")
+    """
 
     @property
     def feeder(self) -> Feeder:

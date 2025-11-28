@@ -1,4 +1,10 @@
-"""Bird Buddy Feed models."""
+"""Bird Buddy activity feed and feed items.
+
+This module provides classes for working with the Bird Buddy activity feed,
+including postcards, sightings, species unlocks, and other feed events.
+Feed items contain information about expiration times, media content, and
+timestamps.
+"""
 
 from __future__ import annotations
 
@@ -12,7 +18,26 @@ from . import LOGGER
 
 
 class FeedNodeType(Enum):
-    """Known Feed node types."""
+    """Types of items that can appear in the Bird Buddy feed.
+
+    Feed items represent different events and activities from your feeders,
+    from new bird sightings to feeder sharing events.
+
+    Values:
+        NewPostcard: A new postcard with bird sighting(s) ready to collect
+        CollectedPostcard: A postcard that has been collected
+        SpeciesSighting: A sighting of a bird species
+        SpeciesUnlocked: First sighting of a new species (unlocked)
+        MysteryVisitorNotRecognized: An unidentified bird visitor
+        MysteryVisitorResolved: A mystery visitor that was later identified
+        MediaLiked: Someone liked media from your feeder
+        InvitationConfirmed: A feeder sharing invitation was accepted
+        InvitationDeclined: A feeder sharing invitation was declined
+        MemberDeleted: A member was removed from feeder access
+        GlobalImportant: Important announcement from Bird Buddy
+        GlobalRegular: Regular announcement from Bird Buddy
+        Unknown: An unrecognized feed item type
+    """
 
     CollectedPostcard = "FeedItemCollectedPostcard"
     GlobalImportant = "FeedGlobalImportantItem"
@@ -37,7 +62,39 @@ class FeedNodeType(Enum):
 
 
 class FeedNode(UserDict[str, any]):
-    """A single Feed edge node."""
+    """A single item in the Bird Buddy activity feed.
+
+    Feed nodes represent individual events like new postcards, sightings,
+    species unlocks, and other activities. Each node has a type, timestamp,
+    and type-specific data.
+
+    For NewPostcard nodes, additional properties provide information about
+    media content, expiration times, and whether the postcard contains video.
+
+    The class inherits from UserDict, so all dictionary operations are supported.
+    Use the provided properties for typed access to feed item data.
+
+    Examples:
+        >>> feed = await bb.feed()
+        >>> for node in feed.nodes:
+        ...     if node.node_type == FeedNodeType.NewPostcard:
+        ...         print(f"New postcard expires: {node.expires_at}")
+        ...         print(f"Has video: {node.has_video_media}")
+        ...         print(f"Image count: {node.media_image_count}")
+
+        >>> new_items = feed.filter(of_type=FeedNodeType.NewPostcard)
+        >>> for item in new_items:
+        ...     print(f"Created: {item.created_at}")
+
+    Attributes:
+        All feed node data is stored in the underlying dictionary.
+        Use properties for typed access to standard fields.
+
+    Note:
+        Properties like expires_at, has_video_media, and media_image_count
+        are specific to NewPostcard feed items and will return None for
+        other feed item types.
+    """
 
     _DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
     """The format string of GraphQL timestamps. This is not guaranteed to conform to
@@ -86,7 +143,17 @@ class FeedNode(UserDict[str, any]):
 
 
 class FeedEdge(UserDict[str, any]):
-    """A single Feed edge."""
+    """A single edge in the feed's paginated structure.
+
+    Feed edges wrap feed nodes and provide cursor information for pagination.
+    Most users will interact with feed nodes directly rather than edges.
+
+    Examples:
+        >>> feed = await bb.feed()
+        >>> for edge in feed.edges:
+        ...     print(f"Cursor: {edge.cursor}")
+        ...     print(f"Node type: {edge.node.node_type}")
+    """
 
     @property
     def cursor(self) -> str:
@@ -100,7 +167,31 @@ class FeedEdge(UserDict[str, any]):
 
 
 class Feed(UserDict[str, any]):
-    """Representation of the Bird Buddy Feed items."""
+    """The Bird Buddy activity feed containing all recent events and postcards.
+
+    The Feed class provides access to the paginated activity feed, supporting
+    filtering by type and time, and pagination for retrieving older items.
+
+    Examples:
+        >>> feed = await bb.feed()
+        >>> print(f"Feed has {len(list(feed.nodes))} items")
+
+        >>> # Get only new postcards
+        >>> postcards = feed.filter(of_type=FeedNodeType.NewPostcard)
+        >>> for postcard in postcards:
+        ...     print(f"Postcard expires: {postcard.expires_at}")
+
+        >>> # Get items newer than a specific time
+        >>> recent = feed.filter(newer_than=datetime(2024, 1, 1))
+
+        >>> # Pagination - get next page
+        >>> if feed.page_end_cursor:
+        ...     older_feed = await bb.feed(after=feed.page_end_cursor)
+
+    Attributes:
+        All feed data is stored in the underlying dictionary.
+        Use properties and methods for typed access to feed items.
+    """
 
     @property
     def edges(self) -> list[FeedEdge]:

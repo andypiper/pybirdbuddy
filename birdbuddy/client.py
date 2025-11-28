@@ -1,4 +1,9 @@
-"""Bird Buddy client module."""
+"""Bird Buddy client module.
+
+This module provides the main BirdBuddy client class for interacting with
+the Bird Buddy GraphQL API. It handles authentication, feed management,
+media collections, feeder configuration, and bird sighting operations.
+"""
 
 from __future__ import annotations
 
@@ -34,12 +39,71 @@ _NO_VALUE = object()
 
 
 def _redact(data, redacted: bool = True):
-    """Return a redacted string if necessary."""
+    """Return a redacted string if necessary.
+
+    :param data: The data to potentially redact
+    :param redacted: Whether to redact the data
+    :type data: any
+    :type redacted: bool
+    :return: Redacted string or original data
+    :rtype: str | any
+    """
     return "**REDACTED**" if redacted else data
 
 
 class BirdBuddy:
-    """Bird Buddy api client."""
+    """Main client for the Bird Buddy GraphQL API.
+
+    The BirdBuddy client provides async methods for all API operations including:
+
+    - Authentication and token management
+    - Feeder discovery and configuration
+    - Activity feed retrieval and filtering
+    - Media collections and bird sightings
+    - Postcard collection and species identification
+    - Firmware updates and device management
+
+    Authentication can be done with email/password or with existing tokens.
+    The client automatically handles token refresh when needed.
+
+    .. code-block:: python
+
+        # Email/password authentication
+        bb = BirdBuddy(email="user@example.com", password="secret")
+        await bb.refresh()
+
+        # Token-based authentication
+        bb = BirdBuddy(refresh_token="...", access_token="...")
+        await bb.refresh()
+
+    .. code-block:: python
+
+        # Access feeders
+        for feeder_id, feeder in bb.feeders.items():
+            print(f"{feeder.name}: {feeder.battery.percentage}%")
+
+        # Get new postcards
+        feed = await bb.feed()
+        postcards = feed.filter(of_type=FeedNodeType.NewPostcard)
+
+        # Collect a postcard
+        sighting = await bb.sighting_from_postcard(postcards[0])
+        await bb.finish_postcard(postcards[0].node_id, sighting)
+
+    :ivar graphql: GraphQL client instance
+    :ivar user: Logged in user information (None until refresh() is called)
+    :ivar feeders: Dictionary of feeder_id -> Feeder objects
+    :ivar collections: Dictionary of collection_id -> Collection objects
+    :ivar language_code: Current language code for API responses (default: 'en')
+
+    .. note::
+        Most methods require authentication. Call :meth:`refresh()` after
+        initialization to authenticate and load feeder data.
+
+    .. warning::
+        Some operations (firmware updates, feeder settings) are only available
+        to feeder owners, not shared users.
+    """
 
     graphql: GraphqlClient
     _email: str | None
@@ -60,7 +124,28 @@ class BirdBuddy:
         refresh_token: str | None = None,
         access_token: str | None = None,
     ) -> None:
-        """Initialize the Bird Buddy client."""
+        """Initialize the Bird Buddy client.
+
+        Provide either email/password for authentication, or existing tokens.
+        Authentication will occur automatically when making API calls.
+
+        :param email: User email address for email/password authentication
+        :param password: User password for email/password authentication
+        :param refresh_token: Existing refresh token for token-based auth
+        :param access_token: Existing access token (optional, will be refreshed if missing)
+        :type email: str or None
+        :type password: str or None
+        :type refresh_token: str or None
+        :type access_token: str or None
+
+        .. code-block:: python
+
+            # Email/password authentication
+            bb = BirdBuddy("user@example.com", "password123")
+
+            # Token-based authentication
+            bb = BirdBuddy(refresh_token="...", access_token="...")
+        """
         self._email = email
         self._password = password
         self._refresh_token = refresh_token
@@ -241,7 +326,22 @@ class BirdBuddy:
         self._language_code = langcodes.standardize_tag(language_code)
 
     async def refresh(self) -> bool:
-        """Refresh the Bird Buddy feeder data."""
+        """Refresh the Bird Buddy feeder and user data from the API.
+
+        This method authenticates (if needed) and fetches current user information
+        and feeder states. It should be called after initialization and periodically
+        to update cached feeder data.
+
+        :return: True if refresh succeeded, False otherwise
+        :rtype: bool
+        :raises AuthenticationFailedError: If authentication fails
+
+        .. code-block:: python
+
+            bb = BirdBuddy(email="user@example.com", password="secret")
+            await bb.refresh()
+            print(f"Logged in as {bb.user.name}")
+        """
         data = await self._make_request(query=queries.me.ME)
         LOGGER.debug("Feeder data refreshed successfully: %s", data)
         return self._save_me(data["me"])
@@ -251,9 +351,28 @@ class BirdBuddy:
         feeder: Feeder | str,
         is_off_grid: bool,
     ) -> Feeder:
-        """Toggle the feeder's off-grid status.
+        """Toggle a feeder's off-grid mode.
 
-        Available to Owner account only.
+        Off-grid mode disables automatic postcard collection, requiring
+        manual activation through the app.
+
+        :param feeder: Feeder object or feeder ID string
+        :param is_off_grid: True to enable off-grid mode, False to disable
+        :type feeder: Feeder or str
+        :type is_off_grid: bool
+        :return: Updated Feeder object
+        :rtype: Feeder
+        :raises GraphqlError: If the API request fails
+
+        .. warning::
+            Only available to feeder owners. Will fail for shared feeders.
+
+        .. code-block:: python
+
+            feeder = bb.feeders["feeder-id"]
+            if feeder.is_owner:
+                updated = await bb.toggle_off_grid(feeder, True)
+                print(f"Off-grid: {updated.is_off_grid}")
         """
         if isinstance(feeder, Feeder):
             feeder_id = feeder.id
@@ -331,16 +450,36 @@ class BirdBuddy:
         last: int | None = None,
         before: str | None = None,
     ) -> Feed:
-        """Return the Bird Buddy Feed.
+        """Return the Bird Buddy activity feed.
 
-        The returned dictionary contains a `"pageInfo"` key for pagination/cursor data; and an
-        `"edges"` key containing a list of FeedEdge nodes, most recent items listed first.
+        The feed contains recent events including new postcards, sightings, species unlocks,
+        and other activities. Results are paginated with most recent items first.
 
-        :param first: Return the first N items older than `after`
-        :param after: The cursor of the oldest item previously seen, to allow pagination of very long feeds
-        :param last: Return the last N items newer than `before`
-        :param before: The cursor of the newest item previously seen, to allow pagination of very long feeds
-        :param newer_than: `datetime` or `str` of the most recent feed item previously seen
+        :param first: Return the first N items (default: 20)
+        :param after: Cursor for pagination - fetch items older than this cursor
+        :param last: Return the last N items (not currently implemented)
+        :param before: Cursor for pagination - fetch items newer than this cursor (not implemented)
+        :type first: int
+        :type after: str or None
+        :type last: int or None
+        :type before: str or None
+        :return: Feed object containing edges, nodes, and pagination info
+        :rtype: Feed
+        :raises GraphqlError: If the API request fails
+
+        .. code-block:: python
+
+            # Get first 20 feed items
+            feed = await bb.feed()
+
+            # Get only new postcards
+            postcards = feed.filter(of_type=FeedNodeType.NewPostcard)
+
+            # Paginate - get next 20 older items
+            next_feed = await bb.feed(first=20, after=feed.page_end_cursor)
+
+        .. note::
+            The 'before' parameter is not currently supported by the API.
         """
         variables = {
             # $first: Int,
@@ -394,9 +533,23 @@ class BirdBuddy:
         return feed.filter(of_type=node_type)
 
     async def new_postcards(self) -> list[FeedNode]:
-        """Return all new 'Postcard' feed items.
+        """Return all new postcard feed items awaiting collection.
 
-        These Postcard node types will be converted into sightings using ``sighting_from_postcard``.
+        New postcards contain bird sightings that need to be reviewed and collected.
+        Use :meth:`sighting_from_postcard()` to convert postcards into sightings,
+        then :meth:`finish_postcard()` to collect them.
+
+        :return: List of FeedNode items with type FeedItemNewPostcard
+        :rtype: list[FeedNode]
+        :raises GraphqlError: If the API request fails
+
+        .. code-block:: python
+
+            postcards = await bb.new_postcards()
+            for postcard in postcards:
+                print(f"Postcard {postcard.node_id} expires: {postcard.expires_at}")
+                if postcard.has_video_media:
+                    print("  Contains video!")
         """
         return await self.feed_nodes(FeedNodeType.NewPostcard)
 
@@ -436,16 +589,42 @@ class BirdBuddy:
         confidence_threshold: int | None = None,
         share_media: bool = False,
     ) -> bool:
-        """Finish collecting the postcard in your collections.
+        """Finish collecting a postcard into your collections.
 
-        :param feed_item_id the id from ``new_postcards``
-        :param sighting_result from ``sighting_from_postcard``, should contain sightings of type
-        ``SightingRecognizedBird`` or `SightingRecognizedBirdUnlocked``.
-        :param strategy Finishing strategy, one of `RECOGNIZED`, `BEST_GUESS`, or `MYSTERY`
-        :param confidence_threshold Threshold for `BEST_GUESS` strategy to accept the highest
-        confidence suggestion above this threshold. Defaults to 10 (%).
-        :param share_media ``True`` to automatically share finished media to the community.
-        Defaults to ``False``.
+        Completes the sighting collection process by confirming the species identification
+        and adding the media to your bird collections.
+
+        :param feed_item_id: Feed item ID from new_postcards()
+        :param sighting_result: PostcardSighting from sighting_from_postcard()
+        :param strategy: Finishing strategy (RECOGNIZED, BEST_GUESS, or MYSTERY)
+        :param confidence_threshold: Minimum confidence % for BEST_GUESS (default: 10)
+        :param share_media: Whether to share media with community (default: False)
+        :type feed_item_id: str
+        :type sighting_result: PostcardSighting
+        :type strategy: SightingFinishStrategy
+        :type confidence_threshold: int or None
+        :type share_media: bool
+        :return: True if collection succeeded
+        :rtype: bool
+        :raises GraphqlError: If the API request fails
+
+        .. code-block:: python
+
+            postcards = await bb.new_postcards()
+            for postcard in postcards:
+                sighting = await bb.sighting_from_postcard(postcard)
+                success = await bb.finish_postcard(
+                    postcard.node_id,
+                    sighting,
+                    strategy=SightingFinishStrategy.BEST_GUESS,
+                    confidence_threshold=15,
+                    share_media=True
+                )
+
+        .. note::
+            RECOGNIZED strategy requires confident species identification.
+            BEST_GUESS uses the highest confidence suggestion above threshold.
+            MYSTERY creates a mystery visitor for unidentified birds.
         """
         if not isinstance(sighting_result, PostcardSighting):
             # See sighting_from_postcard()["sightingCreateFromPostcard"]
@@ -605,7 +784,27 @@ class BirdBuddy:
         return SightingReport(data["sightingConvertToMysteryVisitor"])
 
     async def refresh_collections(self, of_type: str = "bird") -> dict[str, Collection]:
-        """Return the remote bird collections."""
+        """Refresh and return bird collections from the API.
+
+        Collections organize media by species, providing visit counts,
+        last visit times, and cover media for each species.
+
+        :param of_type: Collection type filter (default: 'bird')
+        :type of_type: str
+        :return: Dictionary mapping collection_id to Collection objects
+        :rtype: dict[str, Collection]
+        :raises GraphqlError: If the API request fails
+
+        .. code-block:: python
+
+            collections = await bb.refresh_collections()
+            for coll in collections.values():
+                species = coll.species
+                print(f"{species.name}: {coll.total_visits} visits")
+                print(f"  Last seen: {coll.last_visit}")
+                if species.favorite_foods:
+                    print(f"  Favorite foods: {', '.join(species.favorite_foods)}")
+        """
         data = await self._make_request(query=queries.me.COLLECTIONS)
         collections = {
             (c := Collection(d)).collection_id: c
@@ -660,7 +859,31 @@ class BirdBuddy:
     async def set_power_profile(
         self, feeder: Feeder | str, profile: PowerProfile
     ) -> dict:
-        """Update the power profile."""
+        """Update a feeder's power profile (detection frequency).
+
+        Power profiles control how frequently the feeder checks for bird activity,
+        balancing detection rate with battery life.
+
+        :param feeder: Feeder object or feeder ID string
+        :param profile: PowerProfile value (FRENZY, STANDARD, or POWER_SAVE)
+        :type feeder: Feeder or str
+        :type profile: PowerProfile
+        :return: Dictionary with updated powerProfile value
+        :rtype: dict
+        :raises GraphqlError: If the API request fails (e.g., FRENZY requires subscription)
+
+        .. warning::
+            Only available to feeder owners. FRENZY mode requires active subscription.
+
+        .. code-block:: python
+
+            from birdbuddy.feeder import PowerProfile
+
+            feeder = bb.feeders["feeder-id"]
+            if feeder.is_owner:
+                result = await bb.set_power_profile(feeder, PowerProfile.STANDARD)
+                print(f"Power profile: {result['powerProfile']}")
+        """
         if isinstance(feeder, Feeder):
             feeder_id = feeder.id
             if not feeder.is_owner:
