@@ -68,6 +68,22 @@ class FeedNode(UserDict[str, any]):
         """The `datetime` when the FeedNode item was created."""
         return FeedNode.parse_datetime(self.get("createdAt"))
 
+    @property
+    def expires_at(self) -> datetime | None:
+        """The `datetime` when the postcard expires (FeedItemNewPostcard only), or None."""
+        return FeedNode.parse_datetime(self.get("expiresAt"))
+
+    @property
+    def has_video_media(self) -> bool | None:
+        """True if postcard contains video (FeedItemNewPostcard only), or None if not a postcard."""
+        return self.get("hasVideoMedia")
+
+    @property
+    def media_image_count(self) -> int | None:
+        """Number of images in postcard (FeedItemNewPostcard only), or None if not a postcard."""
+        count = self.get("mediaImageCount")
+        return int(count) if count is not None else None
+
 
 class FeedEdge(UserDict[str, any]):
     """A single Feed edge."""

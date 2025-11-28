@@ -1344,5 +1344,442 @@
         "deprecationReason": null
       }
     ]
+  },
+  "_mutations": {
+    "name": "Mutation",
+    "fields": [
+      {
+        "name": "alexaAuthCode",
+        "description": null
+      },
+      {
+        "name": "alexaEventAuthorization",
+        "description": null
+      },
+      {
+        "name": "alexaLink",
+        "description": null
+      },
+      {
+        "name": "alexaRemoveDeviceEndpoint",
+        "description": null
+      },
+      {
+        "name": "alexaUnlink",
+        "description": null
+      },
+      {
+        "name": "authChangePassword",
+        "description": null
+      },
+      {
+        "name": "authEmailSignIn",
+        "description": null
+      },
+      {
+        "name": "authEmailSignUp",
+        "description": null
+      },
+      {
+        "name": "authForgotPassword",
+        "description": null
+      },
+      {
+        "name": "authRefreshToken",
+        "description": null
+      },
+      {
+        "name": "authSignOut",
+        "description": null
+      },
+      {
+        "name": "authSocialLink",
+        "description": null
+      },
+      {
+        "name": "authSocialSignIn",
+        "description": null
+      },
+      {
+        "name": "authSocialSignUp",
+        "description": null
+      },
+      {
+        "name": "authUserDelete",
+        "description": null
+      },
+      {
+        "name": "authUserMarkOnboardingCompleted",
+        "description": null
+      },
+      {
+        "name": "authUserUpdate",
+        "description": null
+      },
+      {
+        "name": "authUserUpdateLocation",
+        "description": null
+      },
+      {
+        "name": "betaLabsFeatureUserSettingUpdate",
+        "description": null
+      },
+      {
+        "name": "collectionAssignMultipleCoverMedia",
+        "description": null
+      },
+      {
+        "name": "collectionAssignMultipleCoverMediaUndo",
+        "description": null
+      },
+      {
+        "name": "collectionMarkSeen",
+        "description": "When collection has new: true, this should be called once seen."
+      },
+      {
+        "name": "collectionMediaLike",
+        "description": null
+      },
+      {
+        "name": "collectionMediaLinkShare",
+        "description": null
+      },
+      {
+        "name": "collectionMediaWrongBird",
+        "description": null
+      },
+      {
+        "name": "collectionSightingCollect",
+        "description": null
+      },
+      {
+        "name": "externalServiceSubscriptionCancel",
+        "description": null
+      },
+      {
+        "name": "feedGlobalItemHide",
+        "description": null
+      },
+      {
+        "name": "feedItemDiscard",
+        "description": null
+      },
+      {
+        "name": "feedItemUndoDiscard",
+        "description": null
+      },
+      {
+        "name": "feederFirmwareUpdateCheckProgress",
+        "description": null
+      },
+      {
+        "name": "feederFirmwareUpdateRegularStart",
+        "description": "Triggers a firmware update which will fail if the conditions for the update are not met."
+      },
+      {
+        "name": "feederFirmwareUpdateStart",
+        "description": "Will schedule a firmware update which waits for the conditions of the update to be met before triggering it."
+      },
+      {
+        "name": "feederInvitationCreate",
+        "description": null
+      },
+      {
+        "name": "feederInvitationDelete",
+        "description": null
+      },
+      {
+        "name": "feederInvitationJoinFeeder",
+        "description": null
+      },
+      {
+        "name": "feederInvitationRedeem",
+        "description": null
+      },
+      {
+        "name": "feederLeave",
+        "description": null
+      },
+      {
+        "name": "feederMemberConfirm",
+        "description": null
+      },
+      {
+        "name": "feederMemberDelete",
+        "description": null
+      },
+      {
+        "name": "feederPairCheck",
+        "description": null
+      },
+      {
+        "name": "feederPairEnd",
+        "description": null
+      },
+      {
+        "name": "feederPairEndCheck",
+        "description": null
+      },
+      {
+        "name": "feederPairStart",
+        "description": null
+      },
+      {
+        "name": "feederPairStartCheck",
+        "description": null
+      },
+      {
+        "name": "feederRemove",
+        "description": null
+      },
+      {
+        "name": "feederRequestLivestreamAccess",
+        "description": null
+      },
+      {
+        "name": "feederToggleAudio",
+        "description": null
+      },
+      {
+        "name": "feederToggleFeederMemberLivestreamAccess",
+        "description": null
+      },
+      {
+        "name": "feederToggleHighQualityVideo",
+        "description": null
+      },
+      {
+        "name": "feederToggleOffGrid",
+        "description": null
+      },
+      {
+        "name": "feederToggleOffGridCheck",
+        "description": null
+      },
+      {
+        "name": "feederUpdate",
+        "description": null
+      },
+      {
+        "name": "feederUpdateCameraFieldOfView",
+        "description": null
+      },
+      {
+        "name": "feederUpdateLocation",
+        "description": null
+      },
+      {
+        "name": "feederUpdatePowerProfile",
+        "description": null
+      },
+      {
+        "name": "feederUpdateVideoQuality",
+        "description": null
+      },
+      {
+        "name": "feederWifiTestStart",
+        "description": null
+      },
+      {
+        "name": "feederWifiTestStartCheck",
+        "description": null
+      },
+      {
+        "name": "feederWifiTestStop",
+        "description": null
+      },
+      {
+        "name": "hasLinkedAlexa",
+        "description": null
+      },
+      {
+        "name": "inferenceExternalPostcardConversation",
+        "description": null
+      },
+      {
+        "name": "inferenceExternalPostcardConversationFromQuestion",
+        "description": null
+      },
+      {
+        "name": "inferenceExternalPostcardReanalyze",
+        "description": null
+      },
+      {
+        "name": "inferencePostcardFeedback",
+        "description": null
+      },
+      {
+        "name": "invitationCodeUseCode",
+        "description": null
+      },
+      {
+        "name": "mediaDelete",
+        "description": null
+      },
+      {
+        "name": "mediaIdentificationRequestCommunityIdentification",
+        "description": null
+      },
+      {
+        "name": "mediaIdentificationVote",
+        "description": null
+      },
+      {
+        "name": "mediaReport",
+        "description": null
+      },
+      {
+        "name": "mediaShareToggle",
+        "description": null
+      },
+      {
+        "name": "mediaUploadFinish",
+        "description": null
+      },
+      {
+        "name": "mediaUploadImageStart",
+        "description": null
+      },
+      {
+        "name": "mediaUploadRestart",
+        "description": null
+      },
+      {
+        "name": "mediasDelete",
+        "description": null
+      },
+      {
+        "name": "notificationAddDeviceNotificationToken",
+        "description": null
+      },
+      {
+        "name": "notificationDemoForCurrentSession",
+        "description": null
+      },
+      {
+        "name": "paymentsProductPurchased",
+        "description": null
+      },
+      {
+        "name": "paymentsProductsRestored",
+        "description": null
+      },
+      {
+        "name": "postcardCollect",
+        "description": null
+      },
+      {
+        "name": "postcardIgnoreMysteryVisitorsUpdate",
+        "description": null
+      },
+      {
+        "name": "postcardMediaSpeciesNameAssign",
+        "description": null
+      },
+      {
+        "name": "postcardMediaSpeciesNameFeedback",
+        "description": null
+      },
+      {
+        "name": "postcardMediaSpeciesStateFeedback",
+        "description": null
+      },
+      {
+        "name": "premiumCancelled",
+        "description": null
+      },
+      {
+        "name": "remoteFeederConnect",
+        "description": null
+      },
+      {
+        "name": "remoteFeederDisconnect",
+        "description": null
+      },
+      {
+        "name": "remoteFeederQRCodeScanned",
+        "description": null
+      },
+      {
+        "name": "remoteFeederSwitch",
+        "description": null
+      },
+      {
+        "name": "settingsUpdate",
+        "description": null
+      },
+      {
+        "name": "sightingChooseSpecies",
+        "description": "Convert sighting to chosen species."
+      },
+      {
+        "name": "sightingConvertToCannotDecide",
+        "description": "Convert sighting (currently only unlocked) to cannot decide."
+      },
+      {
+        "name": "sightingConvertToMysteryVisitor",
+        "description": "Convert sighting (currently only cannot decide) to mystery visitor."
+      },
+      {
+        "name": "sightingCreateFromMediaReviewReport",
+        "description": null
+      },
+      {
+        "name": "sightingCreateFromPostcard",
+        "description": null
+      },
+      {
+        "name": "sightingFinishMediaReview",
+        "description": null
+      },
+      {
+        "name": "sightingIgnore",
+        "description": null
+      },
+      {
+        "name": "sightingReportPostcardFinish",
+        "description": null
+      },
+      {
+        "name": "sightingSendForReview",
+        "description": null
+      },
+      {
+        "name": "speciesIgnoreToggle",
+        "description": null
+      },
+      {
+        "name": "watchingActiveKeep",
+        "description": null
+      },
+      {
+        "name": "watchingActiveRemoveSnapshots",
+        "description": null
+      },
+      {
+        "name": "watchingActiveStop",
+        "description": null
+      },
+      {
+        "name": "watchingActiveTakeSnapshot",
+        "description": null
+      },
+      {
+        "name": "watchingCooldown",
+        "description": null
+      },
+      {
+        "name": "watchingStartCheck",
+        "description": null
+      },
+      {
+        "name": "watchingStartV2",
+        "description": null
+      },
+      {
+        "name": "watchingWarmup",
+        "description": null
+      }
+    ]
   }
 }

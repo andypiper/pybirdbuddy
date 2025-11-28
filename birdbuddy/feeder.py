@@ -167,6 +167,31 @@ class Feeder(UserDict[str, any]):
         return self.get("audioEnabled", None)
 
     @property
+    def supports_audio(self) -> bool | None:
+        """Whether the feeder supports audio recording, or None if not available."""
+        return self.get("supportsAudio")
+
+    @property
+    def supports_enhanced_livestream(self) -> bool | None:
+        """Whether the feeder supports enhanced livestream, or None if not available."""
+        return self.get("supportsEnhancedLivestream")
+
+    @property
+    def supports_webrtc(self) -> bool | None:
+        """Whether the feeder supports WebRTC, or None if not available."""
+        return self.get("supportsWebRTC")
+
+    @property
+    def video_high_quality_enabled(self) -> bool | None:
+        """Whether high quality video is enabled (owner only), or None if not available."""
+        return self.get("videoHighQualityEnabled")
+
+    @property
+    def video_quality(self) -> str | None:
+        """Video quality setting (owner only), or None if not available."""
+        return self.get("videoQuality")
+
+    @property
     def owner(self) -> str:
         """The username who first paired the Feeder."""
         return self.get("ownerName")

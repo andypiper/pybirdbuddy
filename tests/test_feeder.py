@@ -145,6 +145,84 @@ class TestFeederComplete:
         assert feeder.signal.rssi == -45
 
 
+class TestFeederVideoCapabilities:
+    """Tests for Feeder video capability properties."""
+
+    def test_feeder_supports_audio(self):
+        """Test supportsAudio field."""
+        feeder = Feeder({
+            "id": "feeder-123",
+            "name": "My Feeder",
+            "state": "ONLINE",
+            "supportsAudio": True,
+            "__typename": "FeederForPrivate"
+        })
+        assert feeder.supports_audio is True
+
+    def test_feeder_supports_enhanced_livestream(self):
+        """Test supportsEnhancedLivestream field."""
+        feeder = Feeder({
+            "id": "feeder-123",
+            "name": "My Feeder",
+            "state": "ONLINE",
+            "supportsEnhancedLivestream": True,
+            "__typename": "FeederForPrivate"
+        })
+        assert feeder.supports_enhanced_livestream is True
+
+    def test_feeder_supports_webrtc(self):
+        """Test supportsWebRTC field."""
+        feeder = Feeder({
+            "id": "feeder-123",
+            "name": "My Feeder",
+            "state": "ONLINE",
+            "supportsWebRTC": False,
+            "__typename": "FeederForPrivate"
+        })
+        assert feeder.supports_webrtc is False
+
+    def test_feeder_video_high_quality_enabled(self):
+        """Test videoHighQualityEnabled field (owner only)."""
+        feeder = Feeder({
+            "id": "feeder-123",
+            "name": "My Feeder",
+            "state": "ONLINE",
+            "videoHighQualityEnabled": True,
+            "__typename": "FeederForOwner"
+        })
+        assert feeder.video_high_quality_enabled is True
+
+    def test_feeder_video_quality(self):
+        """Test videoQuality field (owner only)."""
+        feeder = Feeder({
+            "id": "feeder-123",
+            "name": "My Feeder",
+            "state": "ONLINE",
+            "videoQuality": "HIGH",
+            "__typename": "FeederForOwner"
+        })
+        assert feeder.video_quality == "HIGH"
+
+    def test_feeder_all_video_capabilities(self):
+        """Test feeder with all video capability fields."""
+        feeder = Feeder({
+            "id": "feeder-complete",
+            "name": "Complete Feeder",
+            "state": "READY_TO_STREAM",
+            "supportsAudio": True,
+            "supportsEnhancedLivestream": True,
+            "supportsWebRTC": True,
+            "videoHighQualityEnabled": True,
+            "videoQuality": "4K",
+            "__typename": "FeederForOwner"
+        })
+        assert feeder.supports_audio is True
+        assert feeder.supports_enhanced_livestream is True
+        assert feeder.supports_webrtc is True
+        assert feeder.video_high_quality_enabled is True
+        assert feeder.video_quality == "4K"
+
+
 class TestBackwardCompatibility:
     """Tests for backward compatibility."""
 
@@ -173,6 +251,8 @@ class TestBackwardCompatibility:
         # New properties should return None when fields missing
         assert feeder.housing_type is None
         assert feeder.device_version is None
+        assert feeder.supports_audio is None
+        assert feeder.video_quality is None
 
     def test_dict_access_still_works(self):
         """Test that dict-style access still works (Feeder extends UserDict)."""

@@ -68,6 +68,9 @@ fragment ListFeederFields on FeederForPrivate {
     __typename
   }
   state
+  supportsAudio
+  supportsEnhancedLivestream
+  supportsWebRTC
   temperature {
     value
     __typename
@@ -85,6 +88,8 @@ fragment ListOwnerFeederFields on FeederForOwner {
   audioEnabled
   powerProfile
   presenceUpdatedAt
+  videoHighQualityEnabled
+  videoQuality
   members {
     ...FeederMemberFields
     __typename
@@ -311,6 +316,7 @@ fragment GalleryPreviewImagesFields on CollectionMedia {
 fragment SpeciesAnyListFields on AnySpecies {
   ... on SpeciesBird {
     ...SpeciesListFields
+    favoriteFoods
     isUnofficialName
     mapUrl
     __typename
@@ -378,6 +384,9 @@ fragment MysteryVisitorResolvedFields on FeedItemMysteryVisitorResolved {
 }
 fragment NewPostcardFields on FeedItemNewPostcard {
   ...FeedItemFields
+  expiresAt
+  hasVideoMedia
+  mediaImageCount
   __typename
 }
 """.strip()
@@ -467,6 +476,7 @@ fragment GalleryPreviewImagesFields on CollectionMedia {
 fragment SpeciesAnyListFields on AnySpecies {
   ... on SpeciesBird {
     ...SpeciesListFields
+    favoriteFoods
     isUnofficialName
     mapUrl
     __typename

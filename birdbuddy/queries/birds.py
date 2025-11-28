@@ -145,6 +145,7 @@ fragment SightingRecognizedFields on SightingRecognized {
 fragment SpeciesAnyListFields on AnySpecies {
   ... on SpeciesBird {
     ...SpeciesListFields
+    favoriteFoods
     isUnofficialName
     mapUrl
     __typename
@@ -298,6 +299,7 @@ fragment SightingRecognizedFields on SightingRecognized {
 fragment SpeciesAnyListFields on AnySpecies {
   ... on SpeciesBird {
     ...SpeciesListFields
+    favoriteFoods
     isUnofficialName
     mapUrl
     __typename
@@ -441,6 +443,7 @@ fragment SightingRecognizedFields on SightingRecognized {
 fragment SpeciesAnyListFields on AnySpecies {
   ... on SpeciesBird {
     ...SpeciesListFields
+    favoriteFoods
     isUnofficialName
     mapUrl
     __typename

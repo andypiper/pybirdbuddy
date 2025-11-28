@@ -230,6 +230,102 @@ def introspect_enum(token, enum_name):
         return None
 
 
+def introspect_mutations(token):
+    """Introspect all mutations to discover writable fields."""
+    query = """
+    query IntrospectMutations {
+      __schema {
+        mutationType {
+          name
+          fields {
+            name
+            description
+          }
+        }
+      }
+    }
+    """
+
+    print(f"{'='*70}")
+    print(f"Introspecting Mutations (Writable Operations)")
+    print(f"{'='*70}")
+
+    try:
+        response = requests.post(
+            API_URL,
+            json={"query": query},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {token}"
+            },
+            timeout=30
+        )
+        response.raise_for_status()
+        data = response.json()
+
+        if "errors" in data:
+            print(f"❌ Errors: {data['errors']}\n")
+            return None
+
+        mutation_type = data.get("data", {}).get("__schema", {}).get("mutationType")
+        if not mutation_type:
+            print(f"⚠️  No mutations found\n")
+            return None
+
+        # Print mutations
+        fields = mutation_type.get("fields", [])
+        if fields:
+            print(f"\n🔐 Found {len(fields)} mutations:\n")
+
+            # Group by category
+            media_mutations = []
+            feeder_mutations = []
+            species_mutations = []
+            other_mutations = []
+
+            for field in fields:
+                name = field["name"]
+                if "media" in name.lower() or "sighting" in name.lower():
+                    media_mutations.append(name)
+                elif "feeder" in name.lower():
+                    feeder_mutations.append(name)
+                elif "species" in name.lower():
+                    species_mutations.append(name)
+                else:
+                    other_mutations.append(name)
+
+            if feeder_mutations:
+                print(f"  📡 Feeder Mutations ({len(feeder_mutations)}):")
+                for m in feeder_mutations:
+                    print(f"     • {m}")
+                print()
+
+            if media_mutations:
+                print(f"  🎥 Media/Sighting Mutations ({len(media_mutations)}):")
+                for m in media_mutations:
+                    print(f"     • {m}")
+                print()
+
+            if species_mutations:
+                print(f"  🦅 Species Mutations ({len(species_mutations)}):")
+                for m in species_mutations:
+                    print(f"     • {m}")
+                print()
+
+            if other_mutations:
+                print(f"  🔧 Other Mutations ({len(other_mutations)}):")
+                for m in other_mutations:
+                    print(f"     • {m}")
+                print()
+
+        print()
+        return mutation_type
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Request failed: {e}\n")
+        return None
+
+
 def main():
     """Main introspection routine."""
     print("\n" + "="*70)
@@ -268,6 +364,11 @@ def main():
         enum_result = introspect_enum(token, enum_name)
         if enum_result:
             results[enum_name] = enum_result
+
+    # Introspect mutations to discover writable fields
+    mutations = introspect_mutations(token)
+    if mutations:
+        results["_mutations"] = mutations
 
     # Save results
     output_file = "api_introspection_results.json"

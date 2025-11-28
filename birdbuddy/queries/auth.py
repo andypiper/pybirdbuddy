@@ -91,6 +91,9 @@ fragment ListFeederFields on FeederForPrivate {
     __typename
   }
   state
+  supportsAudio
+  supportsEnhancedLivestream
+  supportsWebRTC
   temperature {
     value
     __typename
@@ -115,6 +118,8 @@ fragment ListOwnerFeederFields on FeederForOwner {
   powerProfile
   presenceUpdatedAt
   serialNumber
+  videoHighQualityEnabled
+  videoQuality
   members {
     ...FeederMemberFields
     __typename

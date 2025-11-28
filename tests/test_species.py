@@ -52,6 +52,34 @@ class TestSpecies:
         assert species.name == "Unknown Bird"
         assert species.scientific_name is None
 
+    def test_species_with_favorite_foods(self):
+        """Test species with favoriteFoods field (SpeciesBird)."""
+        species = Species({
+            "id": "species-789",
+            "name": "American Robin",
+            "scientificName": "Turdus migratorius",
+            "favoriteFoods": ["MEALWORMS", "BERRIES", "INSECTS"]
+        })
+        assert species.favorite_foods == ["MEALWORMS", "BERRIES", "INSECTS"]
+        assert len(species.favorite_foods) == 3
+
+    def test_species_with_empty_favorite_foods(self):
+        """Test species with empty favoriteFoods list."""
+        species = Species({
+            "id": "species-789",
+            "name": "Test Bird",
+            "favoriteFoods": []
+        })
+        assert species.favorite_foods == []
+
+    def test_species_without_favorite_foods(self):
+        """Test species without favoriteFoods field."""
+        species = Species({
+            "id": "species-789",
+            "name": "Test Bird"
+        })
+        assert species.favorite_foods is None
+
 
 class TestBackwardCompatibility:
     """Tests for backward compatibility."""
